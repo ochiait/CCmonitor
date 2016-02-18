@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: students
+# Table name: teachers
 #
 #  id          :integer          not null, primary key
 #  name        :string           not null
@@ -10,12 +10,11 @@
 #  address     :string           not null
 #  tel         :string           not null
 #  sex         :integer          not null
-#  birth_day   :datetime         not null
-#  status      :integer          not null
+#  birth_day   :datetime
 #  memo        :text
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
 
-class Student < ActiveRecord::Base
+class Teacher < ActiveRecord::Base
 end
