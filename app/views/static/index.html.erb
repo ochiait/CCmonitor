@@ -1,2 +1,14 @@
 <h1>Static#index</h1>
 <p>Find me in app/views/static/index.html.erb</p>
+
+<h1>ログイン画面</h>
+  <p>メールを入力して登録</p>
+    <%= form_tag "/static/index" do %>
+      <%= text_field_tag :email %>
+      <%= submit_tag "送信" %>
+      <% end %>
+      <%= @email %>
+
+  <%= button_tag(type: 'button') do %>
+    <%= content_tag(:strong, 'Facebookで登録') %>
+  <% end %>
