@@ -3,6 +3,10 @@ class Student::SessionsController < ApplicationController
     @student = Student.new
   end
   def create
+    if params[:email].nil?
+      redirect_to "/" and return
+    end
+    PostMailer.post_email(params[:email]).deliver
     raise
   end
   def login
