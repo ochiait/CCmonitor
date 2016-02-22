@@ -4,8 +4,6 @@ Rails.application.routes.draw do
   end
 
   get 'static/index'
-  namespace :student do
-  get 'signup', to: 'sessions#index'
-  end
 
+  match 'sign_up' => 'student/sessions#create', :via => [:get, :post]
 end
