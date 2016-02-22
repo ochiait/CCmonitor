@@ -12,6 +12,7 @@ class CreateStudents < ActiveRecord::Migration
       t.integer  :status, null: false
       t.text  :memo
       t.timestamps null: false
+      t.string :password_digest, null: false
     end
   end
 end

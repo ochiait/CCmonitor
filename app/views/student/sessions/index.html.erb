@@ -1,2 +1,14 @@
 <h1>Student::Sessions#index</h1>
 <p>Find me in app/views/student/sessions/index.html.erb</p>
+
+
+<%= form_for @student, {url: student_signup_path} do |f| %>
+  <div class="field">
+    <%= f.label :password, "パスワード" %><br>
+    <%= f.password_field :password %>
+  </div>
+  <div class="field">
+    <%= f.label :password_confirmation, "パスワード再入力" %><br>
+    <%= f.password_field :password_confirmation %>
+  </div>
+<% end %>

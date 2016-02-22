@@ -46,3 +46,4 @@ end
 gem 'pg'
 gem 'annotate'
 gem 'actionmailer'
+gem 'bcrypt', '~> 3.1.7'
