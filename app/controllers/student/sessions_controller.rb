@@ -6,8 +6,11 @@ class Student::SessionsController < ApplicationController
     if params[:email].nil?
       redirect_to "/" and return
     end
-    PostMailer.post_email(params[:email]).deliver
-    raise
+    @student_tmp = StudentTmp.new({email: params[:email]})
+    @student_tmp.save
+    PostMailer.post_email(@student_tmp).deliver
+
+    redirect_to "/" and return
   end
   def login
     member = Member.find_by_login_name params[:name]
