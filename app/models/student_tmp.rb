@@ -13,6 +13,7 @@
 
 require 'digest/md5'
 class StudentTmp < ActiveRecord::Base
+  # メールの形式があっているかチェック
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }
   before_save {
@@ -20,7 +21,7 @@ class StudentTmp < ActiveRecord::Base
     self.key = generate_key
   }
 
-  private
+
     # save時にlifetime作成する
     def generate_lifetime
       # 期限は1時間

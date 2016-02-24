@@ -1,0 +1,42 @@
+<h1>Static#register</h1>
+<p>Find me in app/views/static/register.html.erb</p>
+
+<h1>本登録画面</h>
+    <%= form_for @student, :url => {:action => 'thankyou'} do |f| %>
+    <div>
+    名前
+    <%= f.text_field :name %>
+    </div>
+    <div>
+    メールアドレス
+     <%= f.text_field :email %>
+    </div>
+    <div>
+    パスワード
+     <%= f.text_field :password %>
+    </div>
+    <div>
+    郵便番号
+     <%= f.text_field :zip_code %>
+    </div>
+    <div>
+    電話番号
+     <%= f.text_field :tel %>
+     </div>
+     <div>
+     性別
+     <%= f.text_field :sex %>
+     </div>
+     <div>
+     誕生日
+     <%= f.text_field :birth_day %>
+     </div>
+     <div>
+    会員区分
+     <%= f.text_field :status %>
+     </div>
+     <div>
+      <%= submit_tag "送信" %>
+     </div>
+      <% end %>
+      <%= @email %>
