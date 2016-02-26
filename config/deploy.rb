@@ -23,8 +23,8 @@ set :deploy_to, '/var/www/rails/ccmonitor'
 # set :pty, true
 
 # Default value for :linked_files is []
-# シンボリックリンクをはるファイル。今回はgemのconfigを使用して、production.ymlを共通化。
-set :linked_files, fetch(:linked_files, []).push('config/settings/production.yml')
+# シンボリックリンクをはるファイル。今回はdotenvのgemを使用
+#set :linked_files, fetch(:linked_files, []).push('.env')
 
 # Default value for linked_dirs is []
 # シンボリックリンクをはるフォルダ。
@@ -44,6 +44,10 @@ set :keep_releases, 5
 
 # rubyのバージョン
 set :rbenv_ruby, '2.2.2'
+
+# rbenvのインストール先の設定
+set :rbenv_custom_path, '/usr/local/rbenv'
+
 namespace :deploy do
   desc 'Restart application'
   task :restart do
