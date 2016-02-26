@@ -48,4 +48,4 @@
 #  }
 #
 server '52.192.19.238', user: 'ec2-user', roles: %w{app} #serverのipとuser名は適宜
-set :ssh_options, keys: '~/.ssh/ccmonitor' #ssh_keyの名前は適宜
+set :ssh_options, keys: '/Users/ochiait/ccmonitor-key.pem' #ssh_keyの名前は適宜

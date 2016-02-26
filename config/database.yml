@@ -23,5 +23,5 @@ test:
 production:
   <<: *default
   database: ccmonitor
-  username: <%= Settings.database[:user_name] %>
-  password: <%= Settings.database[:password] %>
+  username: <%= ENV['POSTGRE_USER_NAME'] %>
+  password: <%= ENV['POSTGRE_PASSWORD'] %>
