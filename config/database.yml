@@ -23,3 +23,5 @@ test:
 production:
   <<: *default
   database: ccmonitor
+  username: <%= Settings.database[:user_name] %>
+  password: <%= Settings.database[:password] %>

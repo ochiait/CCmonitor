@@ -49,3 +49,12 @@ gem 'pg'
 gem 'annotate'
 gem 'actionmailer'
 gem 'bcrypt', '~> 3.1.7'
+
+# Capistranoとunicorn導入
+gem 'unicorn'
+gem 'capistrano'
+gem 'capistrano-bundler'
+gem 'capistrano-rails'
+gem 'capistrano-rbenv'
+gem 'capistrano3-unicorn'
+
