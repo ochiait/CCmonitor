@@ -51,7 +51,8 @@ set :rbenv_custom_path, '/usr/local/rbenv'
 namespace :deploy do
   desc 'Restart application'
   task :restart do
-    invoke 'unicorn:restart'
+    #invoke 'unicorn:restart'
+    invoke 'unicorn:legacy_restart'
   end
   desc 'Create database'
   task :db_create do
