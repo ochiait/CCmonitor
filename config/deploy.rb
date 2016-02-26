@@ -24,7 +24,7 @@ set :deploy_to, '/var/www/rails/ccmonitor'
 
 # Default value for :linked_files is []
 # シンボリックリンクをはるファイル。今回はdotenvのgemを使用
-set :linked_files, fetch(:linked_files, []).push('.env')
+#set :linked_files, fetch(:linked_files, []).push('.env')
 
 # Default value for linked_dirs is []
 # シンボリックリンクをはるフォルダ。
