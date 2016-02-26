@@ -31,5 +31,3 @@ after_fork do |server, worker|
   defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
 end
 
-stderr_path "log/unicorn_stderr.log"
-stdout_path "log/unicorn_stdout.log"
