@@ -1,17 +1,20 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 
-set :application, 'ccmonitor'
-set :repo_url, 'git@github.com:ochiait/ccmonitor.git'
+set :application, ''
+set :repo_url, ''
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+ask :branch, 'master'
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, '/var/www/rails/ccmonitor'
+# set :deploy_to, '/var/www/my_app_name'
+set :deploy_to, ''
 
 # Default value for :scm is :git
 # set :scm, :git
+set :scm, :git
 
 # Default value for :format is :pretty
 # set :format, :pretty
@@ -23,68 +26,64 @@ set :deploy_to, '/var/www/rails/ccmonitor'
 # set :pty, true
 
 # Default value for :linked_files is []
-# シンボリックリンクをはるファイル。今回はdotenvのgemを使用
-#set :linked_files, fetch(:linked_files, []).push('.env')
+# set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
+set :linked_files, fetch(:linked_files, []).push('.env')
 
 # Default value for linked_dirs is []
-# シンボリックリンクをはるフォルダ。
-set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
-
+# set :linked_dirs, fetch(:linked_dirs, []).push(
+#  'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system'
+# )
+set :linked_dirs, fetch(:linked_dirs, []).push(
+  'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system'
+)
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
-set :default_env, {
-  rbenv_root: "/usr/local/rbenv",
-  path: "/usr/local/rbenv/shims:/usr/local/rbenv/bin:$PATH"
-}
-
+set :default_env, ({
+  rbenv_root: '/usr/local/rbenv',
+  path: '/usr/local/rbenv/shims:/usr/local/rbenv/bin:$PATH'
+})
 
 # Default value for keep_releases is 5
+# set :keep_releases, 5
 set :keep_releases, 5
 
-# rubyのバージョン
-set :rbenv_ruby, '2.2.2'
+# namespace :deploy do
+#   after :restart, :clear_cache do
+#     on roles(:web), in: :groups, limit: 3, wait: 10 do
+#       # Here we can do anything such as:
+#       # within release_path do
+#       #   execute :rake, 'cache:clear'
+#       # end
+#     end
+#   end
+# end
 
-# rbenvのインストール先の設定
-set :rbenv_custom_path, '/usr/local/rbenv'
+# Unicornの設定
+set :unicorn_rack_env,    'none'
+set :unicorn_config_path, 'config/unicorn.rb'
 
-# Uniconeの設定
-set :unicorn_rack_env, 'none'
-set :unicorn_config_path, 'config/unicorn.conf.rb'
-
+after 'deploy:publishing', 'deploy:restart'
 namespace :deploy do
+  # サーバーの再起動タスク
   desc 'Restart application'
   task :restart do
-    #invoke 'unicorn:restart'
-    invoke 'unicorn:legacy_restart'
+    invoke 'unicorn:restart'
   end
-  desc 'Create database'
-  task :db_create do
-    on roles(:db) do |host|
-      with rails_env: fetch(:rails_env) do
-        within current_path do
-          execute :bundle, :exec, :rake, 'db:create'
-        end
-      end
-    end
-  end
-  desc 'Run seed'
-  task :seed do
+
+  # 設定ファイルのアップロードタスク
+  desc 'Upload configuration file'
+  task :upload do
     on roles(:app) do
-      with rails_env: fetch(:rails_env) do
-        within current_path do
-          execute :bundle, :exec, :rake, 'db:seed'
-        end
+      if test "[ ! -d #{shared_path}/config ]"
+        execute "mkdir -p #{shared_path}/config"
       end
+      upload!('config/database.yml',  "#{shared_path}/config/database.yml")
+      upload!('config/secrets.yml',   "#{shared_path}/config/secrets.yml")
+      upload!('.env',                 "#{shared_path}/.env")
     end
   end
-  after :publishing, :restart
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
-    end
-  end
+
+  before :starting, 'deploy:upload'
+  after :finishing, 'deploy:cleanup'
 end

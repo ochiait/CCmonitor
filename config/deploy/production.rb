@@ -2,26 +2,22 @@
 # ======================
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
-
+# example:
 # server 'example.com', user: 'deploy', roles: %w{app db web}, my_property: :my_value
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
-
-
+server '', user: '', roles: %w{app db web}
 
 # role-based syntax
 # ==================
-
 # Defines a role with one or multiple servers. The primary server in each
 # group is considered to be the first unless any  hosts have the primary
 # property set. Specify the username and a domain or IP for the server.
 # Don't use `:all`, it's a meta role.
-
+# example:
 # role :app, %w{deploy@example.com}, my_property: :my_value
 # role :web, %w{user1@primary.com user2@additional.com}, other_property: :other_value
 # role :db,  %w{deploy@example.com}
-
-
 
 # Configuration
 # =============
@@ -30,8 +26,6 @@
 # For available Capistrano configuration variables see the documentation page.
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
-
-
 
 # Custom SSH Options
 # ==================
@@ -47,5 +41,18 @@
 #    auth_methods: %w(password)
 #  }
 #
-server '52.192.19.238', user: 'ec2-user', roles: %w{app} #serverのipとuser名は適宜
-set :ssh_options, keys: '/Users/ochiait/ccmonitor-key.pem' #ssh_keyの名前は適宜
+# The server-based syntax can be used to override options:
+# ------------------------------------
+# server 'example.com',
+#   user: 'user_name',
+#   roles: %w{web app},
+#   ssh_options: {
+#     user: 'user_name', # overrides user setting above
+#     keys: %w(/home/user_name/.ssh/id_rsa),
+#     forward_agent: false,
+#     auth_methods: %w(publickey password)
+#     # password: 'please use keys'
+#   }
+
+set :rails_env, :production
+set :bundle_without, 'development test'
